@@ -1485,13 +1485,14 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
 
   void _stopHandlerAnimation({Animation? animation, AnimationController? controller}) {
     if (widget.handlerAnimation.reverseCurve != null) {
-      if (animation!.isCompleted)
-        controller!.reverse();
-      else {
-        controller!.reset();
+      if (animation!.isCompleted) {
+        if (mounted) controller?.reverse();
+      } else {
+        if (mounted) controller?.reset();
       }
-    } else
-      controller!.reset();
+    } else {
+      if (mounted) controller?.reset();
+    }
   }
 
   drawHandlers() {
