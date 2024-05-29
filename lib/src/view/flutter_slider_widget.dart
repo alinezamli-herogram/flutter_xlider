@@ -211,8 +211,8 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
   void dispose() {
     _rightTooltipAnimationController.dispose();
     _leftTooltipAnimationController.dispose();
-    _leftHandlerScaleAnimationController!.dispose();
-    _rightHandlerScaleAnimationController!.dispose();
+    _leftHandlerScaleAnimationController?.dispose();
+    _rightHandlerScaleAnimationController?.dispose();
     super.dispose();
   }
 
@@ -1312,15 +1312,15 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
 
           if (!_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
             _leftTooltipOpacity = 1;
-            _leftTooltipAnimationController.forward();
+            if (mounted) _leftTooltipAnimationController.forward();
 
             if (widget.lockHandlers) {
               _rightTooltipOpacity = 1;
-              _rightTooltipAnimationController.forward();
+              if (mounted) _rightTooltipAnimationController.forward();
             }
           }
 
-          _leftHandlerScaleAnimationController!.forward();
+          if (mounted) _leftHandlerScaleAnimationController!.forward();
 
           if (mounted) setState(() {});
 
@@ -1370,8 +1370,8 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
     if (!_tooltipData.alwaysShowTooltip!) {
       _leftTooltipOpacity = 0;
       _rightTooltipOpacity = 0;
-      _leftTooltipAnimationController.reset();
-      _rightTooltipAnimationController.reset();
+      if (mounted) _leftTooltipAnimationController.reset();
+      if (mounted) _rightTooltipAnimationController.reset();
     }
   }
 
@@ -1423,19 +1423,20 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
 
           if (!_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
             _rightTooltipOpacity = 1;
-            _rightTooltipAnimationController.forward();
+            if (mounted) _rightTooltipAnimationController.forward();
 
             if (widget.lockHandlers) {
               _leftTooltipOpacity = 1;
-              _leftTooltipAnimationController.forward();
+              if (mounted) _leftTooltipAnimationController.forward();
             }
 
             if (mounted) setState(() {});
           }
-          if (widget.rangeSlider == false)
-            _leftHandlerScaleAnimationController!.forward();
-          else
-            _rightHandlerScaleAnimationController!.forward();
+          if (widget.rangeSlider == false) {
+            if (mounted) _leftHandlerScaleAnimationController!.forward();
+          } else {
+            if (mounted) _rightHandlerScaleAnimationController!.forward();
+          }
 
           _callbacks('onDragStarted', 1);
         },
@@ -1562,14 +1563,14 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
                     _trackBarSlideCallDragStated(0);
                     if (!_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
                       _leftTooltipOpacity = 1;
-                      _leftTooltipAnimationController.forward();
+                      if (mounted) _leftTooltipAnimationController.forward();
                     }
                     _leftHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding);
                   } else {
                     _trackBarSlideCallDragStated(1);
                     if (!_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
                       _rightTooltipOpacity = 1;
-                      _rightTooltipAnimationController.forward();
+                      if (mounted) _rightTooltipAnimationController.forward();
                     }
                     _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding);
                   }
@@ -1577,7 +1578,7 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
                   _trackBarSlideCallDragStated(1);
                   if (!_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
                     _rightTooltipOpacity = 1;
-                    _rightTooltipAnimationController.forward();
+                    if (mounted) _rightTooltipAnimationController.forward();
                   }
                   _rightHandlerMove(_, tappedPositionWithPadding: tappedPositionWithPadding);
                 }
@@ -1640,14 +1641,14 @@ class _FlutterSliderState extends State<FlutterSlider> with TickerProviderStateM
               if (_ignoreSteps.length == 0) {
                 if ((widget.lockHandlers || __lockedHandlersDragOffset > 0) && !_tooltipData.disabled! && _tooltipData.alwaysShowTooltip == false) {
                   _leftTooltipOpacity = 1;
-                  _leftTooltipAnimationController.forward();
+                  if (mounted) _leftTooltipAnimationController.forward();
                   _rightTooltipOpacity = 1;
-                  _rightTooltipAnimationController.forward();
+                  if (mounted) _rightTooltipAnimationController.forward();
                 }
 
                 if ((widget.lockHandlers || __lockedHandlersDragOffset > 0)) {
-                  _leftHandlerScaleAnimationController!.forward();
-                  _rightHandlerScaleAnimationController!.forward();
+                  if (mounted) _leftHandlerScaleAnimationController?.forward();
+                  if (mounted) _rightHandlerScaleAnimationController?.forward();
                 }
               }
 
